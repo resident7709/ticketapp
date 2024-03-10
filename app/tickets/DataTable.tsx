@@ -9,6 +9,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import TicketStatusBadge from '@/components/TicketStatusBadge';
+import TicketPriority from '@/components/TicketPriority';
 
 interface Props {
   tickets: Ticket[];
@@ -16,8 +18,6 @@ interface Props {
 }
 
 const DataTable = ({ tickets }: Props) => {
-  console.log('Hi there!');
-
   return (
     <div className='w-full mt-5'>
       <div className='rounded-md sm:border'>
@@ -25,8 +25,12 @@ const DataTable = ({ tickets }: Props) => {
           <TableHeader>
             <TableRow>
               <TableHead>Title</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Priority</TableHead>
+              <TableHead>
+                <div className='flex justify-center'>Status</div>
+              </TableHead>
+              <TableHead>
+                <div className='flex justify-center'>Priority</div>
+              </TableHead>
               <TableHead>Created At</TableHead>
             </TableRow>
           </TableHeader>
@@ -35,10 +39,25 @@ const DataTable = ({ tickets }: Props) => {
               ? tickets.map(ticket => (
                   <TableRow key={ticket.id} data-href='/'>
                     <TableCell>{ticket.title}</TableCell>
-                    <TableCell>{ticket.status}</TableCell>
-                    <TableCell>{ticket.priority}</TableCell>
                     <TableCell>
-                      {ticket.createdAt.toLocaleDateString()}
+                      <div className='flex justify-center'>
+                        <TicketStatusBadge status={ticket.status} />
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className='flex justify-center'>
+                        <TicketPriority priority={ticket.priority} />
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      {ticket.createdAt.toLocaleDateString('en-US', {
+                        year: '2-digit',
+                        month: '2-digit',
+                        day: '2-digit',
+                        hour: 'numeric',
+                        minute: '2-digit',
+                        hour12: false,
+                      })}
                     </TableCell>
                   </TableRow>
                 ))
