@@ -50,7 +50,7 @@ const DataTable = ({ tickets }: Props) => {
                       </div>
                     </TableCell>
                     <TableCell>
-                      {ticket.createdAt.toLocaleDateString('en-US', {
+                      {ticket.createdAt.toLocaleDateString('ru-RU', {
                         year: '2-digit',
                         month: '2-digit',
                         day: '2-digit',
