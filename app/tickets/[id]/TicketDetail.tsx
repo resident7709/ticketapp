@@ -11,6 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import DeleteButton from './DeleteButton';
 import TicketStatusBadge from '@/components/TicketStatusBadge';
 import TicketPriority from '@/components/TicketPriority';
 import { buttonVariants } from '@/components/ui/button';
@@ -45,11 +46,7 @@ const TicketDetail = ({ ticket }: Props) => {
           className={`${buttonVariants({ variant: 'default' })}`}>
           Edit Ticket
         </Link>
-        <Link
-          href={`/tickets/edit/${ticket.id}`}
-          className={`${buttonVariants({ variant: 'default' })}`}>
-          Delete Ticket
-        </Link>
+        <DeleteButton ticketId={ticket.id} />
       </div>
     </div>
   );
