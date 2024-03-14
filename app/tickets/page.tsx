@@ -4,6 +4,7 @@ import prisma from '@/prisma/db';
 
 import DataTable from './DataTable';
 import Pagination from '@/components/Pagination';
+import StatusFilter from '@/components/StatusFilter';
 import { buttonVariants } from '@/components/ui/button';
 
 interface SearchParams {
@@ -27,6 +28,7 @@ const Tickets = async ({ searchParams }: { searchParams: SearchParams }) => {
         className={buttonVariants({ variant: 'default' })}>
         New Ticket
       </Link>
+      <StatusFilter />
       <DataTable tickets={tickets} />
       <Pagination
         itemCount={ticketCount}
