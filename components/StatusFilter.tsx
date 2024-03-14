@@ -34,7 +34,7 @@ const StatusFilter = () => {
         const query = params.size ? `?${params.toString()}` : '0';
         router.push(`/tickets${query}`);
       }}>
-      <SelectTrigger>
+      <SelectTrigger className='w-[200px]'>
         <SelectValue placeholder='Filter by Status..' />
       </SelectTrigger>
       <SelectContent>
