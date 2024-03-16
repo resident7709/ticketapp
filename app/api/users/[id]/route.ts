@@ -1,7 +1,9 @@
 import prisma from '@/prisma/db';
 import bcrypt from 'bcryptjs';
+import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
 
+import options from '../../auth/[...nextauth]/options';
 import { userSchema } from '@/ValidationSchemas/users';
 
 interface Props {
@@ -9,6 +11,16 @@ interface Props {
 }
 
 export async function PATCH(request: NextRequest, { params }: Props) {
+  const session = await getServerSession(options);
+
+  if (!session) {
+    return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
+  }
+
+  if (session.user.role !== 'ADMIN') {
+    return NextResponse.json({ error: 'Not Admin' }, { status: 401 });
+  }
+
   const body = await request.json();
   const validation = userSchema.safeParse(body);
 
@@ -49,4 +61,30 @@ export async function PATCH(request: NextRequest, { params }: Props) {
   });
 
   return NextResponse.json(updateUser);
+}
+
+export async function DELETE(_: NextRequest, { params }: Props) {
+  const session = await getServerSession(options);
+
+  if (!session) {
+    return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
+  }
+
+  if (session.user.role !== 'ADMIN') {
+    return NextResponse.json({ error: 'Not Admin' }, { status: 401 });
+  }
+
+  const user = await prisma.user.findUnique({
+    where: { id: parseInt(params.id) },
+  });
+
+  if (!user) {
+    return NextResponse.json({ error: 'User Not Found' }, { status: 404 });
+  }
+
+  await prisma.user.delete({
+    where: { id: user.id },
+  });
+
+  return NextResponse.json({ message: 'User Deleted' });
 }
