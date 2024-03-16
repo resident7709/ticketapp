@@ -8,7 +8,7 @@ const MainNavLinks = ({ role }: { role?: string }) => {
   const links = [
     { label: 'Dashboard', href: '/', adminOnly: false },
     { label: 'Tickets', href: '/tickets', adminOnly: false },
-    { label: 'Users', href: '/users', adminOnly: false },
+    { label: 'Users', href: '/users', adminOnly: true },
   ];
 
   const currentPath = usePathname();

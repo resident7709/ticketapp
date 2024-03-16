@@ -37,6 +37,9 @@ const Tickets = async ({ searchParams }: { searchParams: SearchParams }) => {
     where,
     take: pageSize,
     skip: (page - 1) * pageSize,
+    orderBy: {
+      createdAt: 'desc',
+    },
   });
 
   return (
